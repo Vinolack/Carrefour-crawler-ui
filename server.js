@@ -10,7 +10,8 @@ const upload = multer({ dest: 'uploads/' });
 const PORT = 3000;
 
 // Python API 地址配置
-const PYTHON_API_URL = 'http://10.85.3.110:8000';
+const PYTHON_API_URL = process.env.PYTHON_API_URL || 'http://127.0.0.1:8000';
+console.log(`Backend API set to: ${PYTHON_API_URL}`);
 
 app.use(express.static('public'));
 app.use(express.json());
