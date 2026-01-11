@@ -176,15 +176,30 @@
         }
 
         // 更新计数器
-        const processed = data.processed || 0;
-        const total = data.total || 0;
+        let processed = data.processed || 0;
+        let total = data.total || 0;
+        let percentage = 0;
+
+        // 如果状态已完成，强制将进度拉满，修正显示的数字
+        if (data.status === 'completed') {
+            percentage = 100;
+            processed = total;
+            
+            progressBar.classList.remove('progress-bar-animated');
+            progressBar.classList.add('bg-success'); // 变绿
+        } else {
+            // 计算常规进度
+            if (total > 0) {
+                percentage = Math.round((processed / total) * 100);
+            }
+            // 保持动画
+            progressBar.classList.add('progress-bar-animated');
+            progressBar.classList.remove('bg-success');
+        }
+
+        // 更新 DOM
         counterText.textContent = `${processed} / ${total}`;
 
-        // 更新进度条
-        let percentage = 0;
-        if (total > 0) {
-            percentage = Math.round((processed / total) * 100);
-        }
         // 如果是 store 扫描阶段且 total 还是0，给个假动画
         if (data.status === 'scanning_pages' && total === 0) {
             progressBar.classList.add('progress-bar-striped');
