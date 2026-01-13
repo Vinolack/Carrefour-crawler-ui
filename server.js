@@ -105,7 +105,6 @@ app.get('/api/template', (req, res) => {
         const wb = xlsx.utils.book_new();
         
         // 创建示例数据：第一行为标题（可选），第二行为示例 URL
-        // 注意：之前的解析逻辑会过滤掉不以 http 开头的内容，所以加标题是安全的
         const templateData = [
             ["URL (必填)"], 
             ["https://www.carrefour.fr/p/sample-product-id"],
